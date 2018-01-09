@@ -29,6 +29,8 @@ public class GUI {
 		this.open();
 	}
 	
+	
+	
 	public void open() {
 		ItemStack infoItem = new ItemStack(Material.DIAMOND_PICKAXE, 1);
 		ItemMeta im = infoItem.getItemMeta();
@@ -46,7 +48,7 @@ public class GUI {
 		
 		ItemStack upgradeItem = new ItemStack(Material.PAPER, 1);
 		im = upgradeItem.getItemMeta();
-		im.setDisplayName("Next Upgrade");
+		im.setDisplayName(ChatColor.GREEN + "Next Upgrade");
 		lore = new ArrayList<String>();
 		lore.add("");
 		lore.add(ChatColor.RED + "Next Upgrade Amount:");
@@ -62,5 +64,6 @@ public class GUI {
 		Inventory inv = Bukkit.createInventory(owner, 9);
 		inv.setItem(2, infoItem);
 		inv.setItem(6, upgradeItem);
+		this.owner.openInventory(inv);
 	}
 }
