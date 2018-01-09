@@ -45,6 +45,10 @@ public class AutoMinerListener implements Listener {
 		}
 		if (event.getSlot() == 6) {
 			event.setCancelled(true);
+			if (this.plugin.getSave().getInt("players." + event.getWhoClicked().getUniqueId().toString() + ".amount") >= VirtualAutoMiner.maxMiners) {
+				event.getWhoClicked().sendMessage(ChatColor.RED + "You already have the maximum amount of miners allowed.");
+				return;
+			}
 			double upgradeCost = VirtualAutoMiner.defaultUpgradeAmount * Math.pow(VirtualAutoMiner.growthFactor, this.plugin.getSave().getInt("players." + event.getWhoClicked().getUniqueId().toString() + ".amount"));
 			if (VirtualAutoMiner.getEconomy().getBalance((OfflinePlayer) event.getWhoClicked()) >= upgradeCost) {
 				VirtualAutoMiner.getEconomy().withdrawPlayer((OfflinePlayer) event.getWhoClicked(), upgradeCost);
