@@ -14,14 +14,16 @@ import net.milkbowl.vault.economy.Economy;
 public class VirtualAutoMiner extends JavaPlugin {
 
 	public static Economy economy = null;
-	public double productivityPerMiner;
+	public static double productivityPerMiner;
+	public static double defaultUpgradeAmount;
+	public static double growthFactor;
 
 	@SuppressWarnings("deprecation")
 	public void onEnable() {
 		this.createFiles();
 		this.setupEconomy();
 		this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Task(this), 0, 1200);
-		this.productivityPerMiner = this.getConfig().getDouble("productivity_per_miner");
+		VirtualAutoMiner.productivityPerMiner = this.getConfig().getDouble("productivity_per_miner");
 		this.getCommand("autominer").setExecutor(new Commands(this));
 	}
 

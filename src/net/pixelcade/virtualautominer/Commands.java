@@ -13,7 +13,7 @@ public class Commands implements CommandExecutor {
 	public Commands(VirtualAutoMiner virtualAutoMiner) {
 		this.plugin = virtualAutoMiner;
 	}
-
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (args.length == 0) {
@@ -26,20 +26,26 @@ public class Commands implements CommandExecutor {
 				sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
 				return true;
 			}
-			// open gui
+			new GUI(player, this.plugin.getSave().getInt("players." + player.getUniqueId().toString() + ".amount")).open();
 			return true;
 		}
 		if (args.length == 1) {
 			if (args[0].equalsIgnoreCase("reload")) {
-				
-				
+				// reload
+				return true;
 			}
 			if (sender.hasPermission("ama.reload")) {
 				sender.sendMessage(ChatColor.RED + "Wrong usage. Did you mean /am reload?");
 				return true;
 			} else {
-				// open gui
+				if (!(sender instanceof Player)) {
+					sender.sendMessage(ChatColor.RED + "Wrong usage. Did you mean /am reload?");
+					return true;
+				} else {
+					Player player = (Player) sender;
+					new GUI(player, this.plugin.getSave().getInt("players." + player.getUniqueId().toString() + ".amount")).open();
 				return true;
+				}
 			}
 		}
 		
