@@ -1,9 +1,13 @@
 package net.pixelcade.virtualautominer;
 
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import net.md_5.bungee.api.ChatColor;
 
 public class AutoMinerListener implements Listener {
 	
@@ -41,7 +45,18 @@ public class AutoMinerListener implements Listener {
 		}
 		if (event.getSlot() == 6) {
 			event.setCancelled(true);
-			event.getWhoClicked().sendMessage("Test.");
+			double upgradeCost = VirtualAutoMiner.defaultUpgradeAmount * Math.pow(VirtualAutoMiner.growthFactor, this.plugin.getSave().getInt("players." + event.getWhoClicked().getUniqueId().toString() + ".amount"));
+			if (VirtualAutoMiner.getEconomy().getBalance((OfflinePlayer) event.getWhoClicked()) >= upgradeCost) {
+				VirtualAutoMiner.getEconomy().withdrawPlayer((OfflinePlayer) event.getWhoClicked(), upgradeCost);
+				event.getWhoClicked().sendMessage(ChatColor.GREEN + "Successfully upgraded your autominer.");
+				this.plugin.getSave().set("players." + event.getWhoClicked().getUniqueId().toString() + ".amount", this.plugin.getSave().getInt("players." + event.getWhoClicked().getUniqueId().toString() + ".amount") + 1 );
+				this.plugin.saveSaveFile();
+				event.getWhoClicked().getOpenInventory().close();
+				new GUI((Player) event.getWhoClicked(), this.plugin.getSave().getInt("players." + event.getWhoClicked().getUniqueId().toString() + ".amount")).open();
+				return;
+			} else {
+				event.getWhoClicked().sendMessage(ChatColor.RED + "You do not have enough money to purchase this.");
+			}
 			return;
 		}
 	}
