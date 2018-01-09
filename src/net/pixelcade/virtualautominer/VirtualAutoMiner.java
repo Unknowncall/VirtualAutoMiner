@@ -29,6 +29,7 @@ public class VirtualAutoMiner extends JavaPlugin {
 		VirtualAutoMiner.maxMiners = this.getConfig().getInt("max_miners");
 		this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Task(this), 0, 1200);
 		this.getCommand("automine").setExecutor(new Commands(this));
+		this.getServer().getPluginManager().registerEvents(new AutoMinerListener(this), this);
 	}
 
 	private File configf, savef;
