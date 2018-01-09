@@ -1,5 +1,6 @@
 package net.pixelcade.virtualautominer;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,11 @@ public class GUI {
 		lore.add(ChatColor.RED + "Next Upgrade Amount:");
 		lore.add(ChatColor.GREEN +" " + (this.amountOfMiners + 1));
 		lore.add(ChatColor.RED + "Cost:");
-		lore.add(ChatColor.GREEN +" " + VirtualAutoMiner.defaultUpgradeAmount * Math.pow(VirtualAutoMiner.growthFactor, this.amountOfMiners));
+		double upgradeCost = VirtualAutoMiner.defaultUpgradeAmount * Math.pow(VirtualAutoMiner.growthFactor, this.amountOfMiners);
+		DecimalFormat df2 = new DecimalFormat( "#.00" );
+		df2.setGroupingUsed(true);
+		df2.setGroupingSize(3);
+		lore.add(ChatColor.GREEN +" " + df2.format(upgradeCost));
 		lore.add("");
 		lore.add(ChatColor.RED + "Right or Left Click to Upgrade");
 		lore.add("");
