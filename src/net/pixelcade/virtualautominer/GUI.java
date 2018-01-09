@@ -29,8 +29,6 @@ public class GUI {
 		this.open();
 	}
 	
-	
-	
 	public void open() {
 		ItemStack infoItem = new ItemStack(Material.DIAMOND_PICKAXE, 1);
 		ItemMeta im = infoItem.getItemMeta();
@@ -61,7 +59,7 @@ public class GUI {
 		im.setLore(lore);
 		upgradeItem.setItemMeta(im);
 		
-		Inventory inv = Bukkit.createInventory(owner, 9);
+		Inventory inv = Bukkit.createInventory(owner, 9, "Virtual Auto Miner");
 		inv.setItem(2, infoItem);
 		inv.setItem(6, upgradeItem);
 		this.owner.openInventory(inv);
