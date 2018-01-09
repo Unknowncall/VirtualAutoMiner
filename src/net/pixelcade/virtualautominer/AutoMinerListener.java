@@ -49,6 +49,16 @@ public class AutoMinerListener implements Listener {
 				event.getWhoClicked().sendMessage(ChatColor.RED + "You already have the maximum amount of miners allowed.");
 				return;
 			}
+			int maxLevel = 0;
+			for (int i = 0; i < VirtualAutoMiner.maxMiners; i++) {
+				if (event.getWhoClicked().hasPermission("vam.miners." + i)) {
+					maxLevel = i;
+				}
+			}
+			if (this.plugin.getSave().getInt("players." + event.getWhoClicked().getUniqueId().toString() + ".amount") >= maxLevel) {
+				event.getWhoClicked().sendMessage(ChatColor.RED + "You cannot upgrade your miners any further. You must level-up before you are allowed to purchase more miners.");
+				return;
+			}
 			double upgradeCost = VirtualAutoMiner.defaultUpgradeAmount * Math.pow(VirtualAutoMiner.growthFactor, this.plugin.getSave().getInt("players." + event.getWhoClicked().getUniqueId().toString() + ".amount"));
 			if (VirtualAutoMiner.getEconomy().getBalance((OfflinePlayer) event.getWhoClicked()) >= upgradeCost) {
 				VirtualAutoMiner.getEconomy().withdrawPlayer((OfflinePlayer) event.getWhoClicked(), upgradeCost);
