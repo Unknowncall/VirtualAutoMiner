@@ -17,14 +17,18 @@ public class VirtualAutoMiner extends JavaPlugin {
 	public static double productivityPerMiner;
 	public static double defaultUpgradeAmount;
 	public static double growthFactor;
+	public static int maxMiners;
 
 	@SuppressWarnings("deprecation")
 	public void onEnable() {
 		this.createFiles();
 		this.setupEconomy();
-		this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Task(this), 0, 1200);
 		VirtualAutoMiner.productivityPerMiner = this.getConfig().getDouble("productivity_per_miner");
-		this.getCommand("autominer").setExecutor(new Commands(this));
+		VirtualAutoMiner.defaultUpgradeAmount = this.getConfig().getDouble("base_cost");
+		VirtualAutoMiner.growthFactor = this.getConfig().getDouble("growth_factor");
+		VirtualAutoMiner.maxMiners = this.getConfig().getInt("max_miners");
+		this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Task(this), 0, 1200);
+		this.getCommand("automine").setExecutor(new Commands(this));
 	}
 
 	private File configf, savef;
@@ -94,10 +98,6 @@ public class VirtualAutoMiner extends JavaPlugin {
 
 	public double getProductivityPerMiner() {
 		return productivityPerMiner;
-	}
-
-	public void setProductivityPerMiner(double productivityPerMiner) {
-		this.productivityPerMiner = productivityPerMiner;
-	}
+	} 
 
 }
