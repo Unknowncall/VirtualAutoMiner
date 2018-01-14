@@ -40,7 +40,13 @@ public class GUI {
 		lore.add(ChatColor.GREEN + " " + this.amountOfMiners);
 		lore.add("");
 		lore.add(ChatColor.RED + "Current Earnings:");
-		lore.add(ChatColor.GREEN + " $" + (this.amountOfMiners * VirtualAutoMiner.productivityPerMiner) + "/minute");
+		double moneyEarnings = (this.amountOfMiners * VirtualAutoMiner.productivityPerMiner);
+		double tokenEarnings = (this.amountOfMiners * (VirtualAutoMiner.tokenProductivityPerMiner + 0.00));
+		DecimalFormat df2 = new DecimalFormat("0.00");
+		df2.setGroupingUsed(true);
+		df2.setGroupingSize(3);
+		lore.add(ChatColor.GREEN + " $" + df2.format(moneyEarnings) + "/minute");
+		lore.add(ChatColor.GREEN + " ✪" + df2.format(tokenEarnings) + "/minute");
 		lore.add("");
 		im.setLore(lore);
 		infoItem.setItemMeta(im);
@@ -54,9 +60,6 @@ public class GUI {
 		lore.add(ChatColor.GREEN +" " + (this.amountOfMiners + 1));
 		lore.add(ChatColor.RED + "Cost:");
 		double upgradeCost = VirtualAutoMiner.defaultUpgradeAmount * Math.pow(VirtualAutoMiner.growthFactor, this.amountOfMiners);
-		DecimalFormat df2 = new DecimalFormat( "#.00" );
-		df2.setGroupingUsed(true);
-		df2.setGroupingSize(3);
 		lore.add(ChatColor.GREEN +" " + df2.format(upgradeCost));
 		lore.add("");
 		lore.add(ChatColor.RED + "Right or Left Click to Upgrade");

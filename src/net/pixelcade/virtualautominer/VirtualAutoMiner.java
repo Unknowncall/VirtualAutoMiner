@@ -15,6 +15,7 @@ public class VirtualAutoMiner extends JavaPlugin {
 
 	public static Economy economy = null;
 	public static double productivityPerMiner;
+	public static double tokenProductivityPerMiner;
 	public static double defaultUpgradeAmount;
 	public static double growthFactor;
 	public static int maxMiners;
@@ -27,7 +28,8 @@ public class VirtualAutoMiner extends JavaPlugin {
 		VirtualAutoMiner.defaultUpgradeAmount = this.getConfig().getDouble("base_cost");
 		VirtualAutoMiner.growthFactor = this.getConfig().getDouble("growth_factor");
 		VirtualAutoMiner.maxMiners = this.getConfig().getInt("max_miners");
-		this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Task(this), 0, 1200);
+		VirtualAutoMiner.tokenProductivityPerMiner = this.getConfig().getDouble("token_productivity_per_miner");
+		this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Task(this), 0, 1200 * 5);
 		this.getCommand("automine").setExecutor(new Commands(this));
 		this.getServer().getPluginManager().registerEvents(new AutoMinerListener(this), this);
 	}

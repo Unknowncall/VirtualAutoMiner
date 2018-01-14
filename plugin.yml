@@ -1,11 +1,9 @@
  name: VirtualAutoMiner
  version: 1.0.0
  author: Unknowncall
- authors: [Cogito, verrier, EvilSeph] 
- website: http://forums.bukkit.org/threads/MyPlugin.31337/
  
  main: net.pixelcade.virtualautominer.VirtualAutoMiner
- depend: [Vault]
+ depend: [Vault, TokenEnchant]
  
  commands:
    automine:

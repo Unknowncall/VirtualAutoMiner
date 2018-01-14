@@ -30,6 +30,29 @@ public class Commands implements CommandExecutor {
 			return true;
 		}
 		if (args.length == 1) {
+			if (args[0].equalsIgnoreCase("silent")) {
+				if (!(sender instanceof Player)) {
+					sender.sendMessage("You must be a player to use this command.");
+					return true;
+				}
+				Player player = (Player) sender;
+				if (!player.hasPermission("am.togglesilent")) {
+					sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+					return true;
+				}
+				boolean isSilent = this.plugin.getSave().getBoolean("players." + player.getUniqueId().toString() + ".silentMessage");
+				if (isSilent) {
+					this.plugin.getSave().set("players." + player.getUniqueId().toString() + ".silentMessage", false);
+					this.plugin.saveSaveFile();
+					player.sendMessage(ChatColor.GREEN + "Toggled messages on.");
+					return true;
+				} else {
+					this.plugin.getSave().set("players." + player.getUniqueId().toString() + ".silentMessage", true);
+					this.plugin.saveSaveFile();
+					player.sendMessage(ChatColor.RED + "Toggled messages off.");
+					return true;
+				}
+			}
 			if (args[0].equalsIgnoreCase("reload")) {
 				// reload
 				return true;

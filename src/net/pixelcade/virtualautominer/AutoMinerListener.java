@@ -23,6 +23,10 @@ public class AutoMinerListener implements Listener {
 			this.plugin.getSave().set("players." + event.getPlayer().getUniqueId().toString() + ".amount", 0);
 			this.plugin.saveSaveFile();
 		}
+		if (this.plugin.getSave().getString("players." + event.getPlayer().getUniqueId().toString() + ".silentMessage") == null) {
+			this.plugin.getSave().set("players." + event.getPlayer().getUniqueId().toString() + ".silentMessage", false);
+			this.plugin.saveSaveFile();
+		}
 	}
 	
 	@EventHandler
@@ -55,7 +59,7 @@ public class AutoMinerListener implements Listener {
 					maxLevel = i;
 				}
 			}
-			if (this.plugin.getSave().getInt("players." + event.getWhoClicked().getUniqueId().toString() + ".amount") >= maxLevel) {
+			if (this.plugin.getSave().getInt("players." + event.getWhoClicked().getUniqueId().toString() + ".amount") >= (maxLevel + 1)) {
 				event.getWhoClicked().sendMessage(ChatColor.RED + "You cannot upgrade your miners any further. You must level-up before you are allowed to purchase more miners.");
 				return;
 			}
